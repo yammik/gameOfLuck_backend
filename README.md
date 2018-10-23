@@ -49,3 +49,19 @@ for each name, search for:
   - replace #{name}.gsub(' ', '%20')
   - mortality_distribution : url="http://api.population.io:80/1.0/mortality-distribution/#{name.gsub(' ', '%20')}/male/0y/today/"
   * need age param for life expectancy; will need to do in JS
+
+
+#'/countries'
+- Returns list of 200+ countries in JSON.
+- Attributes: name, development status, mortality_distribution
+- Also includes associated date (steps)
+
+#'/players'
+- Returns players created
+- None so far. Rails db:seed destroys all
+- Attributes: name, age (random), gender (random), latitude (random), longitude (random)
+- When name is submitted from the front end, generate random number for:
+    age (5 - 99)
+    gender ('male', 'female').sample
+    latitude (random),
+    longitude (random)

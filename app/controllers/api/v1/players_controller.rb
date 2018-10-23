@@ -1,8 +1,7 @@
 class Api::V1::PlayersController < ApplicationController
 
   def index # to display live/dead stats based on spawn point
-    @players = Player.all
-    render json: @players
+    render json: Player.all, include: ['countries']
   end
 
   def show # to display stat of player in effect
@@ -24,7 +23,7 @@ class Api::V1::PlayersController < ApplicationController
   private
 
   def player_params
-    params.require(:player).permit(:name, :age, :gender, :location)
+    params.require(:player).permit(:name, :age, :gender, :latitude, :longitude)
   end
 
 end

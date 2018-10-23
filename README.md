@@ -7,8 +7,8 @@ APIs:
 
 Store data from external API; save into our db to create our own API
 Game statistics: fail rate depending on region, user stat for fail games
-#Models: user, country, steps
-  1. User: has_many steps Attributes: [:name, :age, :gender, :location, :no_steps, :living]
+#Models: player, country, steps
+  1. Player: has_many steps Attributes: [:name, :age, :gender, :location, :no_steps, :alive]
   2. Country: has_many steps. Attributes: [:mortality_rate, :avg_longevity, :warring, :development_stage]
   3. Steps: belongs_to user, belongs_to country. Get regional data from country. Get health data from user. Generate likelihood of ailments/accidents
 

@@ -1,23 +1,36 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'rest-client'
+require 'json'
 
-Player.create(name: 'asdf', age: 15, gender: 'Female', latitude: 45.0019, longitude: 13.1290)
+Player.destroy_all
+Country.destroy_all
 
-Country.create(name: 'madeup', development: '1st', warring: false, mortality_distribution: [
-    {
-      "age": 45,
-      "mortality_percent": 0
-    },
-    {
-      "age": 50,
-      "mortality_percent": 0.32602975245435656
-    },
-    {
-      "age": 55,
-      "mortality_percent": 2.6558263887814597
-    }])
+
+countries_url = 'http://api.population.io/1.0/countries/?format=json'
+country_names = JSON.parse(RestClient.get(countries_url))
+country_statuses = JSON.parse(RestClient.get('http://api.worldbank.org/v2/countries?format=json'))[1]
+country_names["countries"].each do |country_name|
+  # if country_name == "Central America"
+  #   byebug
+  # end
+  unless country_name == country_name.upcase
+    url = "http://api.population.io:80/1.0/mortality-distribution/#{country_name.gsub(' ', '%20').split('/')[0]}/male/0y/today/"
+    # byebug
+    puts country_name
+    mort_response = RestClient.get(url) {|response, request, result| response}
+    # byebug
+
+    if mort_response.code == 200
+      mortality_distr = JSON.parse(mort_response)["mortality_distribution"]
+
+      status = country_statuses.find {|country| country["name"] == country_name}
+      if !!status
+        development = status["incomeLevel"]["value"]
+      else
+        development = nil
+      end
+
+      # byebug
+      Country.create(name: country_name, mortality_distribution: mortality_distr, development: development)
+    end
+  end
+end

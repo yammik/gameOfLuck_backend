@@ -16,13 +16,13 @@ class Api::V1::PlayersController < ApplicationController
   def create
     @player = Player.create(player_params)
     @player.no_steps = 0
-    @player.living = true
+    @player.alive = true
     @player.save
   end
 
   private
 
-  def player_params
+  def player_params # use JS to generate age, gender, lat, long, and use fetch to generate life expectancy
     params.require(:player).permit(:name, :age, :gender, :latitude, :longitude)
   end
 

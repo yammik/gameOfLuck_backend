@@ -1,6 +1,5 @@
 APIs:
 - World Population
-- FluTrack
 - OnWater
 - Google Maps Street View
 
@@ -43,3 +42,10 @@ Variable endpoint based on something about the spawn country
   Based on state of development in the country.
       e.g. in NYC you have to find the nearest starbucks (= life is easier here, often taken for granted)
            in Syria you have to find the nearest medical facility
+
+Countries are generated with:
+get names : url='http://api.population.io/1.0/countries/?format=json'
+for each name, search for:
+  - replace #{name}.gsub(' ', '%20')
+  - mortality_distribution : url="http://api.population.io:80/1.0/mortality-distribution/#{name.gsub(' ', '%20')}/male/0y/today/"
+  * need age param for life expectancy; will need to do in JS

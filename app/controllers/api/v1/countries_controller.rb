@@ -20,6 +20,6 @@ class Api::V1::CountriesController < ApplicationController
   private
 
   def country_params
-    params.require(:country).permit(:name, :mortality_distribution, :development)
+    params.require(:country).permit(:name, :mortality_distribution, :development, :bounds)
   end
 end

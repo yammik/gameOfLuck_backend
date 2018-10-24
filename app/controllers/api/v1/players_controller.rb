@@ -18,12 +18,24 @@ class Api::V1::PlayersController < ApplicationController
     @player.no_steps = 0
     @player.alive = true
     @player.save
+    render json: @player, status: :created
   end
+
+  def edit
+    @player = Player.find(params[:id])
+  end
+
+  def update
+    @player = Player.find(params[:id])
+    @player.update(player_params)
+    render json: @player, status: :updated
+  end
+
 
   private
 
   def player_params # use JS to generate age, gender, lat, long, and use fetch to generate life expectancy
-    params.permit(:name, :age, :gender, :latitude, :longitude)
+    params.permit(:name, :age, :gender, :alive, :latitude, :longitude)
   end
 
 end

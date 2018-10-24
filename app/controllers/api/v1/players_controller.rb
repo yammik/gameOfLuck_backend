@@ -23,7 +23,7 @@ class Api::V1::PlayersController < ApplicationController
   private
 
   def player_params # use JS to generate age, gender, lat, long, and use fetch to generate life expectancy
-    params.require(:player).permit(:name, :age, :gender, :latitude, :longitude)
+    params.permit(:name, :age, :gender, :latitude, :longitude)
   end
 
 end

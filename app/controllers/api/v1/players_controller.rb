@@ -16,7 +16,7 @@ class Api::V1::PlayersController < ApplicationController
   def create
     @player = Player.create(player_params)
     @player.no_steps = 0
-    @player.alive = true
+    @player.alive = false
     @player.save
     render json: @player, status: :created
   end
